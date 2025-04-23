@@ -42,7 +42,7 @@ export default function CheckBox({
   }, [isParentChecked]);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputoptionent>,
+    event: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
     const { value, checked } = event.target;
