@@ -161,5 +161,5 @@ export default function App() {
     setIsChecked(event.target.checked);
   };
 
-  return <CheckBox data={options1} />;
+  return <CheckBox data={options2} />;
 }

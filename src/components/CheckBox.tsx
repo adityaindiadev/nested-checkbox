@@ -1,52 +1,82 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+function myLog(myLogId = '', ...args) {
+  console.log({ myLogId }, ...args)
+}
 
 export default function CheckBox({
   data = [],
   isParentChecked = false,
+  isCheckInitiatedByChildRef = { current: false },
+  resetIsCheckInitiatedByChildRef = (status = false, logMsg = undefined) => { },
   parentCheckHandler = (
     value: string | number,
     checked: boolean,
     index: number
-  ) => {},
+  ) => { },
   parentId = "",
+  timeStamp = Date.now()
 }) {
+  //console.log({ isCheckInitiatedByChildRef });
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [
     shouldInitiateParentCheckForChild,
     setShouldInitiateParentCheckForChild,
   ] = useState([]);
+  const isCheckInitiatedByChild = useRef(false);
+
+  function resetIsCheckInitiatedByChild(status = false, logMsg = undefined) {
+    //console.log("resetIsCheckInitiatedByChild", logMsg, status);
+
+    isCheckInitiatedByChild.current = status
+  }
+  //console.log("isCheckInitiatedByChild", isCheckInitiatedByChild);
+
   const handleChangeForChild = (
     value: string | number,
     checked: boolean,
     index: number
   ) => {
-    console.log("handleChangeForChild", value, checked);
+    resetIsCheckInitiatedByChild(true)
+    initiateChanges(value, checked)
 
-    if (checked) {
-      setSelectedOptions([...selectedOptions, value]);
-    } else {
-      setSelectedOptions(selectedOptions.filter((option) => option !== value));
-    }
+    // ---------------------
+    //console.log("handleChangeForChild", value, checked);
+
+    // if (checked) {
+    //   setSelectedOptions([...selectedOptions, value]);
+    // } else {
+    //   setSelectedOptions(selectedOptions.filter((option) => option !== value));
+    // }
+    // ---------------------
   };
   function parentCheckOperation() {
+    // myLog('', "parentCheckOperation executed")
     if (isParentChecked) {
       const valueArray = data.map((option, index) => option.id);
-      console.log({ valueArray, parentId });
+      //console.log({ valueArray, parentId });
       setSelectedOptions(valueArray);
     } else setSelectedOptions([]);
   }
   useEffect(() => {
-    // console.log({ isParentChecked });
-    parentCheckOperation();
-    return () => {};
+    myLog('useeffect', parentId, { timeStamp }, isCheckInitiatedByChildRef)
+    // //console.log({ isParentChecked });
+    if (isCheckInitiatedByChildRef.current) {
+      resetIsCheckInitiatedByChildRef(false, "invoked by resetIsCheckInitiatedByChildRef")
+    } else {
+
+      parentCheckOperation()
+    }
+
+    return () => {
+      // resetIsCheckInitiatedByChildRef()
+      myLog('returnuseeffect', parentId, { timeStamp }, isCheckInitiatedByChildRef)
+    }
   }, [isParentChecked]);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const { value, checked } = event.target;
-    console.log({ value, checked });
+  function initiateChanges(value: string | number,
+    checked: boolean) {
     if (checked) {
       parentCheckHandler(
         parentId,
@@ -66,6 +96,17 @@ export default function CheckBox({
         selectedOptions.filter((option) => option !== value)
       );
     }
+  }
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    resetIsCheckInitiatedByChild()
+    const { value, checked } = event.target;
+    //console.log({ value, checked });
+    myLog('handleChange', { clickedValue: value })
+    initiateChanges(value, checked)
     // setShouldInitiateParentCheckForChild(checked);
   };
 
@@ -86,11 +127,11 @@ export default function CheckBox({
             {option?.values?.length > 0 && (
               <CheckBox
                 data={option?.values}
-                isParentChecked={shouldInitiateParentCheckForChild.includes(
-                  option.id
-                )}
+                isParentChecked={selectedOptions.includes(option.id)}
                 parentId={option.id}
                 parentCheckHandler={handleChangeForChild}
+                isCheckInitiatedByChildRef={isCheckInitiatedByChild}
+                resetIsCheckInitiatedByChildRef={resetIsCheckInitiatedByChild}
               />
             )}
           </React.Fragment>
