@@ -52,6 +52,7 @@ export default function CheckBox({
     // ---------------------
   };
   function parentCheckOperation() {
+    resetIsCheckInitiatedByChild()
     // myLog('', "parentCheckOperation executed")
     if (isParentChecked) {
       const valueArray = data.map((option, index) => option.id);
@@ -65,7 +66,6 @@ export default function CheckBox({
     if (isCheckInitiatedByChildRef.current) {
       resetIsCheckInitiatedByChildRef(false, "invoked by resetIsCheckInitiatedByChildRef")
     } else {
-
       parentCheckOperation()
     }
 
