@@ -1,6 +1,6 @@
 # nested-checkbox
 
-![Nested Checkbox Demo]([https://media.giphy.com/media/abc123xyz456/giphy.gif](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmI0dHNydTg5ZmtmdnBlaGN5YmF5N3U0bmw2MGZpMmJpZjZ0bGNmZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/A327phOJBJsDsqajee/giphy.gif))
+![Nested Checkbox Demo](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmI0dHNydTg5ZmtmdnBlaGN5YmF5N3U0bmw2MGZpMmJpZjZ0bGNmZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/A327phOJBJsDsqajee/giphy.gif)
 
 # 🧩 Nested CheckBox Component (React)
 
