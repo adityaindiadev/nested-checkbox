@@ -1,5 +1,7 @@
 # nested-checkbox
 
+![Nested Checkbox Demo]([https://media.giphy.com/media/abc123xyz456/giphy.gif](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmI0dHNydTg5ZmtmdnBlaGN5YmF5N3U0bmw2MGZpMmJpZjZ0bGNmZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/A327phOJBJsDsqajee/giphy.gif))
+
 # 🧩 Nested CheckBox Component (React)
 
 This is a customizable **nested checkbox tree** component built in React. It supports multi-level checkboxes where each checkbox can have child checkboxes. Selecting or deselecting a parent will update its children, and children can also update their parent's state based on their selection status.
